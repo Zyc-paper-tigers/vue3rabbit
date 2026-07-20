@@ -1,20 +1,7 @@
 <script setup>
-//引入在apis/layout.js中封装的获取分类数据的接口函数
-import { getCategoryAPI } from "@/apis/layout.js";
-//onMounted是vue3中提供的生命周期函数，类似于vue2中的mounted,用于在组件挂载后执行一些操作
-import { onMounted, ref } from "vue";
+import { useCategoryStore } from "@/stores/category.js";
 
-const categoryList = ref([]);
-//使用getCategoryAPI函数获取分类数据，并将该操作封装在getCategory中
-const getCategory = async () => {
-  const res = await getCategoryAPI();
-  console.log(res);
-  categoryList.value = res.data.result;
-};
-
-onMounted(() => {
-  getCategory();
-});
+const categoryStore = useCategoryStore();
 </script>
 
 <template>
@@ -24,7 +11,7 @@ onMounted(() => {
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home" v-for="item in categoryList" :key="item.id">
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
