@@ -1,3 +1,3 @@
 <template>
-  <div>我是主首页</div>
+  <div style="height: 1000px">我是主首页</div>
 </template>
