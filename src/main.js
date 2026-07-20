@@ -4,9 +4,8 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-//测试接口
-import { getCategoryAPI } from './apis/testAPI'
-getCategoryAPI().then(res => {console.log(res)}).catch(err => {})
+//引入默认样式文件
+import '@/styles/common.scss'
 
 const app = createApp(App)
 
