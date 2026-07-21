@@ -9,7 +9,7 @@ export const useCategoryStore = defineStore("category", () => {
   //使用getCategoryAPI函数获取分类数据，并将该操作封装在getCategory中
   const getCategory = async () => {
     const res = await getCategoryAPI();
-    categoryList.value = res.data.result;
+    categoryList.value = res.result;
   };
 
   return {
