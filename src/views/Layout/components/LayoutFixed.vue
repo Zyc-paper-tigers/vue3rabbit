@@ -5,6 +5,7 @@ import { useCategoryStore } from "@/stores/category.js";
 const categoryStore = useCategoryStore();
 const { y } = useScroll(window);
 </script>
+
 <template>
   <div class="app-header-sticky" :class="{ show: y > 78 }">
     <div class="container">
@@ -12,7 +13,7 @@ const { y } = useScroll(window);
       <!-- 导航区域 -->
       <ul class="app-header-nav">
         <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
-          <RouterLink to="/">{{ item.name }}</RouterLink>
+          <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
 
