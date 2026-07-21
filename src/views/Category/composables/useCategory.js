@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import { onMounted } from "vue";
 
-function useCategory() {
+export function useCategory() {
   const categoryData = ref({});
   const route = useRoute();
 

@@ -17,9 +17,15 @@ const router = createRouter({
           path: "",
           component: () => import("@/views/Home/index.vue"),
         },
+        //点击导航栏的“分类”时，跳转到分类页面
         {
           path: "category/:id",
           component: () => import("@/views/Category/index.vue"),
+        },
+        //点击分类页面中的“子分类”时，跳转到子分类页面
+        {
+          path: "category/sub/:id",
+          component: () => import("@/views/subCategory/index.vue"),
         },
       ],
     },
