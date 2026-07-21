@@ -2,6 +2,7 @@ import axios from "axios";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
 import { useUserStore } from "@/stores/user";
+import router from "@/router/index";
 
 const httpInstance = axios.create({
   //接口基地址，方便不同接口调用
@@ -29,11 +30,19 @@ httpInstance.interceptors.request.use(
 httpInstance.interceptors.response.use(
   (res) => res.data,
   (e) => {
+    const userStore = useUserStore();
     // 统一错误提示
     ElMessage({
       type: "warning",
       message: e.response.data.message,
     });
+    // 401失效处理
+    if (e.response.status === 401) {
+      // 1. 清除用户信息
+      userStore.clearUserInfo();
+      // 2. 跳转到登录页
+      router.replace("/login");
+    }
     return Promise.reject(e);
   },
 );
