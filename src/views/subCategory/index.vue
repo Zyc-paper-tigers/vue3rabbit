@@ -9,7 +9,7 @@ const route = useRoute();
 const categoryData = ref([]);
 const getCategoryData = async () => {
   const res = await getCategoryFilterAPI(route.params.id);
-  categoryData.value = res.data.result;
+  categoryData.value = res.result;
 };
 
 onMounted(() => {
@@ -27,7 +27,7 @@ const reqData = ref({
 const getGoodList = async () => {
   const res = await getSubCategoryAPI(reqData.value);
   // console.log(res);
-  goodList.value = res.data.result.items;
+  goodList.value = res.result.items;
 };
 
 onMounted(() => {
@@ -53,7 +53,7 @@ const load = async () => {
     // 获取下一页的数据
     reqData.value.page++;
     const res = await getSubCategoryAPI(reqData.value);
-    const items = res.data.result.items;
+    const items = res.result.items;
     // 拼接
     goodList.value = [...goodList.value, ...items];
     // 加载完毕，停止继续请求
