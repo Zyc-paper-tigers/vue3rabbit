@@ -31,6 +31,11 @@ const router = createRouter({
     },
     { path: "/login", component: () => import("@/views/Login/index.vue") },
   ],
+
+  //路由跳转时，页面滚动到顶部
+  scrollBehavior() {
+    return { top: 0 };
+  },
 });
 
 export default router;
