@@ -27,6 +27,11 @@ const router = createRouter({
           path: "category/sub/:id",
           component: () => import("@/views/subCategory/index.vue"),
         },
+        // 点击商品卡片，跳转到商品详情页
+        {
+          path: "detail/:id",
+          component: () => import("@/views/Detail/index.vue"),
+        },
       ],
     },
     { path: "/login", component: () => import("@/views/Login/index.vue") },
