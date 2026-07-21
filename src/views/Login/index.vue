@@ -1,14 +1,17 @@
 <script setup>
-import { loginAPI } from "@/apis/user.js";
+// import { loginAPI } from "@/apis/user.js";
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user.js";
+
+const userStore = useUserStore();
 // 表单校验（账号+密码）
 // 1.准备表单对象
 const form = ref({
-  account: "",
-  password: "",
+  account: "12056258291",
+  password: "hm#qd@23!",
   agree: true,
 });
 
@@ -38,7 +41,7 @@ const doLogin = () => {
   const { account, password } = form.value;
   formRef.value.validate(async (valid) => {
     if (valid) {
-      await loginAPI({ account, password });
+      await userStore.getUserInfo({ account, password });
       ElMessage({ type: "success", message: "登录成功" });
       router.replace({ path: "/" });
     }
