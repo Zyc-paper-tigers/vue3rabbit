@@ -12,7 +12,7 @@ const { bannerList } = useBanner();
 
 <template>
   <div class="top-category">
-    <div class="container m-top-20">
+    <div>
       <!-- 面包屑 -->
       <div class="bread-container">
         <el-breadcrumb separator=">">
