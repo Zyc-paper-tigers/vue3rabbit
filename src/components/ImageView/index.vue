@@ -27,10 +27,10 @@ const top = ref(0);
 const positionX = ref(0);
 const positionY = ref(0);
 watch([elementX, elementY, isOutside], () => {
-  console.log("xy变化了");
-  // 如果鼠标没有移入到盒子里面 直接不执行后面的逻辑
+  // console.log("xy变化了");
+  // 如果鼠标没有移入到盒子里面 直接不执行后面的逻辑，减少负担
   if (isOutside.value) return;
-  console.log("后续逻辑执行了");
+  // console.log("后续逻辑执行了");
   // 有效范围内控制滑块距离
   // 横向
   if (elementX.value > 100 && elementX.value < 300) {
@@ -68,7 +68,7 @@ watch([elementX, elementY, isOutside], () => {
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div class="layer" v-show:="!isOutside" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
@@ -87,11 +87,11 @@ watch([elementX, elementY, isOutside], () => {
       :style="[
         {
           backgroundImage: `url(${imageList[0]})`,
-          backgroundPositionX: `0px`,
-          backgroundPositionY: `0px`,
+          backgroundPositionX: `${positionX}px`,
+          backgroundPositionY: `${positionY}px`,
         },
       ]"
-      v-show="false"
+      v-show:="!isOutside"
     ></div>
   </div>
 </template>
