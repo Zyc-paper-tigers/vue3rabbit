@@ -2,12 +2,14 @@
 import { getOrderAPI } from "@/apis/pay";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+
 const route = useRoute();
 const orderInfo = ref({});
 
 const getOrderInfo = async () => {
   const res = await getOrderAPI(route.query.orderId);
   orderInfo.value = res.result;
+  // 初始化倒计时秒数
 };
 
 onMounted(() => getOrderInfo());
