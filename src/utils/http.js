@@ -8,7 +8,7 @@ const httpInstance = axios.create({
   //接口基地址，方便不同接口调用
   baseURL: "https://pcapi-xiaotuxian-front-devtest.itheima.net",
   //请求超时时间，超过这个5s就报错
-  timeout: 5000,
+  timeout: 20000,
 });
 
 // axios请求拦截器
