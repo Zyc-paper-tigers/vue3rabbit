@@ -1,7 +1,13 @@
 <script setup>
 import { getCheckInfoAPI } from "@/apis/checkout";
 import { ref, onMounted } from "vue";
+import { createOrderAPI } from "@/apis/checkout";
+import { useRouter } from "vue-router";
+import { useCartStore } from "@/stores/cartStore";
+import { ElMessage } from "element-plus";
 
+const cartStore = useCartStore();
+const router = useRouter();
 const curAddress = ref({}); // 默认地址
 const checkInfo = ref({}); // 订单对象
 const getCheckInfo = async () => {
@@ -17,6 +23,7 @@ const showDialog = ref(false);
 
 // 切换地址
 const activeAddress = ref({});
+const submitting = ref(false);
 const switchAddress = (item) => {
   activeAddress.value = item;
 };
@@ -24,6 +31,52 @@ const switchAddress = (item) => {
 const confirm = () => {
   curAddress.value = activeAddress.value;
   showDialog.value = false;
+};
+
+// 创建订单
+const createOrder = async () => {
+  // 防止连续点击时重复创建订单
+  if (submitting.value) return;
+
+  const goods = (checkInfo.value.goods ?? []).map((item) => ({
+    skuId: item.skuId,
+    count: item.count,
+  }));
+
+  if (!goods.length) {
+    ElMessage.warning("没有可结算的商品，请返回购物车重新选择");
+    return;
+  }
+
+  if (!curAddress.value?.id) {
+    ElMessage.warning("请选择收货地址");
+    return;
+  }
+
+  submitting.value = true;
+  try {
+    const res = await createOrderAPI({
+      deliveryTimeType: 1,
+      payType: 1,
+      payChannel: 1,
+      buyerMessage: "",
+      goods,
+      addressId: curAddress.value.id,
+    });
+
+    // 创建订单成功后，后端会移除已结算商品，同步最新购物车
+    await cartStore.updateNewList();
+    await router.push({
+      path: "/pay",
+      query: {
+        id: res.result.id,
+      },
+    });
+  } catch {
+    // 接口错误已由响应拦截器统一提示
+  } finally {
+    submitting.value = false;
+  }
 };
 </script>
 
@@ -123,7 +176,15 @@ const confirm = () => {
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large">提交订单</el-button>
+          <el-button
+            @click="createOrder"
+            type="primary"
+            size="large"
+            :loading="submitting"
+            :disabled="submitting || !checkInfo.goods?.length"
+          >
+            提交订单
+          </el-button>
         </div>
       </div>
     </div>
