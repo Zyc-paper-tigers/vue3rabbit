@@ -12,6 +12,11 @@ const singleCheck = (i, selected) => {
 const delCart = (i) => {
   cartStore.delCart(i);
 };
+
+// 全选回调
+const allCheck = (selected) => {
+  cartStore.allCheck(selected);
+};
 </script>
 
 <template>
@@ -22,7 +27,7 @@ const delCart = (i) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox />
+                <el-checkbox :model-value="cartStore.isAll" @change="allCheck" />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
