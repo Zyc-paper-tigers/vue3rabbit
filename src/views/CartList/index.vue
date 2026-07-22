@@ -10,7 +10,7 @@ const singleCheck = (i, selected) => {
 
 // 删除回调
 const delCart = (i) => {
-  cartStore.delCart(i);
+  cartStore.delCart(i.skuId);
 };
 
 // 全选回调

@@ -6,7 +6,7 @@ import LayoutFooter from "./components/LayoutFooter.vue";
 import LayoutFixed from "./components/LayoutFixed.vue";
 
 //这是在vue3中使用pinia的方式，useCategoryStore是我们在stores/category.js中定义的一个函数，返回一个store实例
-import { useCategoryStore } from "@/stores/category.js";
+import { useCategoryStore } from "@/stores/categoryStore.js";
 const categoryStore = useCategoryStore();
 
 onMounted(() => {
