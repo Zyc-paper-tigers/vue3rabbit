@@ -24,12 +24,25 @@ export const useCartStore = defineStore(
         cartList.value.push(goods);
       }
     };
+
+    // 3. 定义action， 删除购物车内的商品
+    // 删除购物车
+    const delCart = async (skuId) => {
+      // 思路：
+      // 1. 找到要删除项的下标值 - splice
+      const idx = cartList.value.findIndex((item) => skuId === item.skuId);
+      cartList.value.splice(idx, 1);
+      // 2. 使用数组的过滤方法 - filter
+    };
+
     return {
+      delCart,
       cartList,
       addCart,
     };
   },
   {
+    // 本地持久化，页面刷新后不丢失
     persist: true,
   },
 );
