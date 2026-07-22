@@ -5,8 +5,10 @@ import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/userStore.js";
+import { useCartStore } from "@/stores/cartStore.js";
 
 const userStore = useUserStore();
+const cartStore = useCartStore();
 // 表单校验（账号+密码）
 // 1.准备表单对象
 const form = ref({
@@ -42,6 +44,8 @@ const doLogin = () => {
   formRef.value.validate(async (valid) => {
     if (valid) {
       await userStore.getUserInfo({ account, password });
+      // 登录成功并拿到 token 后，同步服务端购物车
+      await cartStore.updateNewList();
       ElMessage({ type: "success", message: "登录成功" });
       router.replace({ path: "/" });
     }

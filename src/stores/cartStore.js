@@ -26,7 +26,7 @@ export const useCartStore = defineStore(
       if (isLogin.value) {
         // 调用接口
         await insertCartAPI({ skuId, count });
-        updateNewList();
+        await updateNewList();
       } else {
         const item = cartList.value.find((item) => goods.skuId === item.skuId);
         if (item) {
@@ -48,7 +48,7 @@ export const useCartStore = defineStore(
     const delCart = async (skuId) => {
       if (isLogin.value) {
         await delCartAPI([skuId]);
-        updateNewList;
+        await updateNewList();
       } else {
         //未登录时操作删除购物车的逻辑
         // 思路：
@@ -57,6 +57,11 @@ export const useCartStore = defineStore(
         cartList.value.splice(idx, 1);
         // 2. 使用数组的过滤方法 - filter
       }
+    };
+
+    // 清除购物车功能
+    const clearCart = () => {
+      cartList.value = [];
     };
 
     // 单选功能
@@ -103,6 +108,8 @@ export const useCartStore = defineStore(
       singleCheck,
       isAll,
       allCheck,
+      clearCart,
+      updateNewList,
     };
   },
   {
